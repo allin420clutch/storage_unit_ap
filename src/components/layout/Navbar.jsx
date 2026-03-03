@@ -1,10 +1,18 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
 
     const isActive = (path) => {
         return location.pathname === path ? 'text-primary font-semibold' : 'text-muted hover:text-main';
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
     };
 
     return (
@@ -22,7 +30,14 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center gap-md">
-                    <Link to="/delinquent" className="text-sm text-muted hover:text-danger transition-colors">Admin</Link>
+                    {isAuthenticated ? (
+                        <>
+                            <Link to="/delinquent" className="text-sm font-semibold text-danger hover:text-danger/80 transition-colors mr-2">Admin Portal</Link>
+                            <button onClick={handleLogout} className="text-sm font-semibold text-muted hover:text-main transition-colors mr-4">Logout</button>
+                        </>
+                    ) : (
+                        <Link to="/login" className="text-sm font-semibold text-muted hover:text-main transition-colors mr-4">Admin Login</Link>
+                    )}
                     <Link to="/units" className="btn btn-primary text-sm">Find Unit</Link>
                 </div>
             </div>
