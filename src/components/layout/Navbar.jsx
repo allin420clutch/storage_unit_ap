@@ -7,7 +7,7 @@ const Navbar = () => {
     const { isAuthenticated, logout } = useAuth();
 
     const isActive = (path) => {
-        return location.pathname === path ? 'text-primary font-semibold' : 'text-muted hover:text-main';
+        return location.pathname === path ? 'text-primary font-semibold' : 'text-muted transition-colors';
     };
 
     const handleLogout = () => {
@@ -16,7 +16,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="border-b border-border bg-surface/50 backdrop-blur-md sticky top-0 z-50">
+        <nav className="border-b bg-surface backdrop-blur sticky top-0 z-50">
             <div className="container flex items-center justify-between h-16">
                 <Link to="/" className="text-xl font-bold text-main flex items-center gap-sm">
                     <span className="text-primary">Storage</span>Pro
@@ -32,11 +32,11 @@ const Navbar = () => {
                 <div className="flex items-center gap-md">
                     {isAuthenticated ? (
                         <>
-                            <Link to="/delinquent" className="text-sm font-semibold text-danger hover:text-danger/80 transition-colors mr-2">Admin Portal</Link>
-                            <button onClick={handleLogout} className="text-sm font-semibold text-muted hover:text-main transition-colors mr-4">Logout</button>
+                            <Link to="/delinquent" className="text-sm font-semibold text-danger transition-colors mr-2">Admin Portal</Link>
+                            <button onClick={handleLogout} className="text-sm font-semibold text-muted transition-colors mr-4">Logout</button>
                         </>
                     ) : (
-                        <Link to="/login" className="text-sm font-semibold text-muted hover:text-main transition-colors mr-4">Admin Login</Link>
+                        <Link to="/login" className="text-sm font-semibold text-muted transition-colors mr-4">Admin Login</Link>
                     )}
                     <Link to="/units" className="btn btn-primary text-sm">Find Unit</Link>
                 </div>

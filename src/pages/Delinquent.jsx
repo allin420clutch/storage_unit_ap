@@ -1,7 +1,23 @@
-import React from 'react';
-import { delinquentAccounts } from '../utils/mockData';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 
 const Delinquent = () => {
+    const [delinquentAccounts, setDelinquentAccounts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            const { data, error } = await supabase.from('delinquent_accounts').select('*').order('numeric_id', { ascending: true });
+            if (!error && data) {
+                setDelinquentAccounts(data);
+            }
+            setLoading(false);
+        };
+        fetchAccounts();
+    }, []);
+
+    if (loading) return <div className="container py-12 text-center text-muted">Loading accounts...</div>;
+
     return (
         <div className="container py-12 animate-fade-in">
             <div className="flex justify-between items-center mb-8">
@@ -30,8 +46,8 @@ const Delinquent = () => {
                                 <tr key={account.id} className="border-b border-border hover:bg-surface/50 transition-colors">
                                     <td className="p-4 font-medium text-main">{account.unit}</td>
                                     <td className="p-4 text-muted">{account.name}</td>
-                                    <td className="p-4 text-danger font-medium">${account.amountDue}</td>
-                                    <td className="p-4 text-muted">{account.daysOverdue} days</td>
+                                    <td className="p-4 text-danger font-medium">${account.amount_due}</td>
+                                    <td className="p-4 text-muted">{account.days_overdue} days</td>
                                     <td className="p-4">
                                         <span className={`badge ${account.status === 'Auction Scheduled' ? 'badge-danger' :
                                                 account.status === 'Pending Auction' ? 'badge-warning' : 'badge-success'

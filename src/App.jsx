@@ -1,37 +1,45 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
-import Home from './pages/Home';
-import Units from './pages/Units';
-import Payment from './pages/Payment';
-import Delinquent from './pages/Delinquent';
-import Auctions from './pages/Auctions';
-import Login from './features/auth/Login';
+
+// Lazy loaded routes for better speed and scalability
+const Home = lazy(() => import('./pages/Home'));
+const Units = lazy(() => import('./pages/Units'));
+const Auctions = lazy(() => import('./pages/Auctions'));
+const Payment = lazy(() => import('./pages/Payment'));
+const Delinquent = lazy(() => import('./pages/Delinquent'));
+const Login = lazy(() => import('./features/auth/Login'));
+
+const PageLoader = () => (
+    <div className="container py-20 text-center text-muted">Loading module...</div>
+);
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/units" element={<Units />} />
-            <Route path="/auctions" element={<Auctions />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/login" element={<Login />} />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/units" element={<Units />} />
+              <Route path="/auctions" element={<Auctions />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/login" element={<Login />} />
 
-            {/* Protected Admin Routes */}
-            <Route
-              path="/delinquent"
-              element={
-                <ProtectedRoute>
-                  <Delinquent />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
+              {/* Protected Admin Routes */}
+              <Route
+                path="/delinquent"
+                element={
+                  <ProtectedRoute>
+                    <Delinquent />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Suspense>
         </Layout>
       </AuthProvider>
     </Router>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 const Payment = () => {
     const [formData, setFormData] = useState({
@@ -15,13 +16,18 @@ const Payment = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        const { error } = await supabase
+            .from('payments')
+            .insert([{ unit_number: formData.unitNumber, amount: parseFloat(formData.amount) }]);
+
+        setLoading(false);
+        if (error) {
+            alert('Payment failed. Please try again.');
+        } else {
             setSuccess(true);
             setFormData({
                 unitNumber: '',
@@ -30,7 +36,7 @@ const Payment = () => {
                 expiry: '',
                 cvc: ''
             });
-        }, 2000);
+        }
     };
 
     if (success) {

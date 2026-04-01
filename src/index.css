@@ -80,6 +80,10 @@ button {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -132,7 +136,31 @@ button {
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  .md\:flex {
+    display: flex;
+  }
+  .md\:hidden {
+    display: none;
+  }
 }
+
+.sticky { position: sticky; }
+.top-0 { top: 0; }
+.z-50 { z-index: 50; }
+.border-b { border-bottom: 1px solid var(--color-border); }
+.bg-surface { background-color: var(--color-surface); }
+.backdrop-blur { backdrop-filter: blur(10px); }
+.text-xl { font-size: var(--font-size-xl); }
+.font-bold { font-weight: 700; }
+.text-main { color: var(--color-text-main); }
+.text-primary { color: var(--color-primary); }
+.text-muted { color: var(--color-text-muted); }
+.font-semibold { font-weight: 600; }
+.text-danger { color: var(--color-danger); }
+.transition-colors { transition: color 0.2s ease; }
+.mr-2 { margin-right: var(--spacing-sm); }
+.mr-4 { margin-right: var(--spacing-md); }
+.h-16 { height: 4rem; }
 
 /* Components */
 .btn {
