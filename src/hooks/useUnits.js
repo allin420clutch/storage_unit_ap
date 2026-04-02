@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchUnits } from '../services/api';
+import { fetchUnits, reserveUnit } from '../services/api';
 
 export const useUnits = () => {
     const [units, setUnits] = useState([]);
@@ -35,5 +35,15 @@ export const useUnits = () => {
         };
     }, []);
 
-    return { units, loading, error };
+    const handleReserve = async (unitId) => {
+        try {
+            await reserveUnit(unitId);
+            setUnits(units.map(u => u.id === unitId ? { ...u, status: 'Occupied' } : u));
+            return { success: true };
+        } catch (err) {
+            return { success: false, error: err.message };
+        }
+    };
+
+    return { units, loading, error, handleReserve };
 };

@@ -10,6 +10,7 @@ const Units = lazy(() => import('./pages/Units'));
 const Auctions = lazy(() => import('./pages/Auctions'));
 const Payment = lazy(() => import('./pages/Payment'));
 const Delinquent = lazy(() => import('./pages/Delinquent'));
+const CameraManager = lazy(() => import('./pages/CameraManager'));
 const Login = lazy(() => import('./features/auth/Login'));
 
 const PageLoader = () => (
@@ -35,6 +36,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Delinquent />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/cameras"
+                element={
+                  <ProtectedRoute>
+                    <CameraManager />
                   </ProtectedRoute>
                 }
               />

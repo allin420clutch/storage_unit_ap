@@ -32,7 +32,8 @@ const Navbar = () => {
                 <div className="flex items-center gap-md">
                     {isAuthenticated ? (
                         <>
-                            <Link to="/delinquent" className="text-sm font-semibold text-danger transition-colors mr-2">Admin Portal</Link>
+                            <Link to="/delinquent" className="text-sm font-semibold text-danger transition-colors">Accounts Admin</Link>
+                            <Link to="/admin/cameras" className="text-sm font-semibold text-danger transition-colors mr-2">Cameras Admin</Link>
                             <button onClick={handleLogout} className="text-sm font-semibold text-muted transition-colors mr-4">Logout</button>
                         </>
                     ) : (

@@ -3,7 +3,7 @@ import { useUnits } from '../hooks/useUnits';
 import UnitCard from '../components/ui/UnitCard';
 
 const Units = () => {
-    const { units, loading, error } = useUnits();
+    const { units, loading, error, handleReserve } = useUnits();
     const [filter, setFilter] = useState('All');
 
     if (loading) return <div className="container py-12 text-center text-muted">Loading units...</div>;
@@ -39,7 +39,7 @@ const Units = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
                 {filteredUnits.map((unit) => (
-                    <UnitCard key={unit.id} unit={unit} />
+                    <UnitCard key={unit.id} unit={unit} onReserve={handleReserve} />
                 ))}
             </div>
 

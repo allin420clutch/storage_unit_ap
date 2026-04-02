@@ -13,6 +13,16 @@ export const fetchUnits = async () => {
     return data;
 };
 
+export const reserveUnit = async (unitId) => {
+    const { error } = await supabase
+        .from('units')
+        .update({ status: 'Occupied' })
+        .eq('id', unitId);
+
+    if (error) throw new Error(error.message);
+    return true;
+};
+
 /**
  * AUCTION API SERVICES
  */

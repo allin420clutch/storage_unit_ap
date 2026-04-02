@@ -23,8 +23,15 @@ const Footer = () => {
                     <div>
                         <h4 className="font-semibold text-main mb-4">Contact</h4>
                         <p className="text-muted text-sm">
-                            123 Storage Lane<br />
-                            Warehouse City, ST 12345<br />
+                            <a 
+                                href="https://www.google.com/maps/dir/?api=1&destination=123+Storage+Lane,+Warehouse+City,+ST+12345" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="hover:text-primary transition-colors hover:underline"
+                            >
+                                123 Storage Lane<br />
+                                Warehouse City, ST 12345
+                            </a><br />
                             (555) 123-4567
                         </p>
                     </div>

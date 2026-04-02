@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const UnitCard = ({ unit }) => {
+const UnitCard = ({ unit, onReserve }) => {
+    const [reserving, setReserving] = useState(false);
+
+    const handleReserveClick = async () => {
+        setReserving(true);
+        const result = await onReserve(unit.id);
+        if (result && result.success) {
+            alert('Reservation confirmed!');
+        } else {
+            alert('Failed to reserve unit.');
+        }
+        setReserving(false);
+    };
+
     return (
         <div className="card hover:border-primary group relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4">
@@ -33,11 +46,12 @@ const UnitCard = ({ unit }) => {
             </div>
 
             <button
-                disabled={unit.status !== 'Available'}
+                onClick={handleReserveClick}
+                disabled={unit.status !== 'Available' || reserving}
                 className={`w-full btn ${unit.status === 'Available' ? 'btn-primary' : 'btn-outline opacity-50 cursor-not-allowed'
                     }`}
             >
-                {unit.status === 'Available' ? 'Reserve Now' : 'Unavailable'}
+                {reserving ? 'Reserving...' : unit.status === 'Available' ? 'Reserve Now' : 'Unavailable'}
             </button>
         </div>
     );
